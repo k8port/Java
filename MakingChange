@@ -1,0 +1,48 @@
+/** Program computes the change that would be dispensed from a vending machine if a dollar was inserted.
+ */
+
+package making.change;
+
+/**
+ *
+ * @author k8port
+ */
+
+import java.util.Scanner;
+import java.text.NumberFormat;
+import java.util.Locale;
+
+public class MakingChange {
+  
+    public static final double AMOUNT = 100;
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        // instance variables
+        double cost, change;
+        Scanner scan = new Scanner(System.in);
+        NumberFormat vend = NumberFormat.getCurrencyInstance();
+        int quarters = 0, dimes = 0, nickels = 0;
+        
+        // input info
+        System.out.println("Enter the price in cents of your item.");
+        cost = scan.nextDouble();
+        
+        // compute results
+        change = AMOUNT - cost;
+        
+        quarters = (int) change / 25;
+        change %= 25;
+        dimes = (int) change / 10;
+        change %= 10;
+        nickels = (int) change / 5;
+        change %= 5;
+        
+        // output
+        System.out.printf("You get %d quarter(s),%n%d dime(s),%nand %d nickel(s).%n",
+                quarters, dimes, nickels);
+    }
+    
+}

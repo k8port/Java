@@ -1,0 +1,48 @@
+/**
+ * A program that calculates the number of years, days, hours, minutes,
+ * and seconds given a number of seconds.
+ */
+
+package secondconverter;
+
+/**
+ *
+ * @author k8port
+ */
+
+import java.util.Scanner;
+
+public class SecondConverter {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        // declare variables
+        long seconds, minutes, hours, days, years;
+        long ls, lm, lh, ld, ly;  // leftover time
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the number of seconds to convert.");
+        seconds = scan.nextLong();
+        
+        minutes = seconds / 60;
+        ls = seconds % 60;
+        
+        hours = minutes / 60;
+        lm = minutes % 60;
+        
+        days = hours / 24;
+        lh =  hours % 24;
+        
+        years = days / 365;
+        ld = days % 365;
+        
+        System.out.format("%d seconds is equivalent to %d years %d days %d hours"
+                + " %d minutes and %d seconds.", seconds, years, ld, lh, lm, ls);
+        
+        
+        
+    }
+    
+}

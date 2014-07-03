@@ -31,8 +31,8 @@ public class HowTallWillMyKidBeJava {
         int ft, in;
         /** variables used to output estimated height of the child */
         int babyFt, babyIn;
-        /** flag to determine whether to keep using or stop - default to true */
-        boolean use = true;
+        /** flag to determine whether to keep using or stop */
+        boolean use;
         System.out.println("This program will calculate the adult height of your "
                         + "child. ");
         do {            

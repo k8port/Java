@@ -16,27 +16,28 @@ public class BabylonianAlgorithm {
     /**
      * @param args the command line arguments
      */
-  
-    private static final double PERCENT = 0.01;  // percentage of accuracy for determining number of iterations
+    private static final double PERCENT = 0.01;
     
     public static void main(String[] args) {
         
-        // declare variables
+        // instance variables
         double r, temp, guess;
+        int n = -1; // initialize n to -1
         Scanner scan = new Scanner(System.in);
-        DecimalFormat formatter = new DecimalFormat("000.00"); // for formatting ressults 
         
-        // gather input from console
-        System.out.println("Enter a number to calculate square root using "
+        // gather user input
+        while (n < 1) {            
+            System.out.println("Enter a number to calculate square root using "
                 + "the babylonian algorithm.");
-        int n = scan.nextInt();
+            n = scan.nextInt();
+        } 
+        DecimalFormat formatter = new DecimalFormat("000.00");
         
-        // calculate algorithm
-        // repeat loop until result is within 1% of previous result
+        // iteration one
         guess = n / 2;
         do {
             temp = guess;
-            System.out.println("iterate");
+            // System.out.println("iterate");
             r = n / guess;
             guess = (guess + r) / 2;
         } while ((temp - guess) >= (PERCENT * temp));

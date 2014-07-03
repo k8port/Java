@@ -1,4 +1,5 @@
-/** Program computes the change that would be dispensed from a vending machine if a dollar was inserted.
+/** Program computes the change to be dispensed from a vending machine using 
+ * the fewest coins.
  */
 
 package making.change;
@@ -27,7 +28,9 @@ public class MakingChange {
         int quarters = 0, dimes = 0, nickels = 0;
         
         // input info
-        System.out.println("Enter the price in cents of your item.");
+        System.out.println("Enter the price in cents of your item. Please"
+                + " enter a positive amount that is a\nmultiple of 5 cents and"
+                + " less than a dollar. Do not include a decimal point.");
         cost = scan.nextDouble();
         
         // compute results

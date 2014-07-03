@@ -2,7 +2,7 @@ Java
 ====
 
 Projects in Java. This repository contains various Java coding exercises I have completed for practice, homework, 
-projects and/or to demonstrate ability.
+projects and/or to demonstrate ability. Many of the exercises were pulled from the textbook Absolute Java by Walter Savitch.
 
 In order to run code you must copy and paste into a text editor or IDE. 
 

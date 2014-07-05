@@ -1,65 +1,58 @@
 /** The program calculates the exponential function e^x where x is a value
- *  input by the user of the program.
+ *  input by the user of the program. 
+ *  The function is: 1 + x + x^2/2! + x^3/3! + ... + x^n/n!.
  */
 
 package exponentialfunction;
 
 import java.util.Scanner;
+import java.text.DecimalFormat;
 /**
  *
  * @author k8port
  */
 public class ExponentialFunction {
-    
-    /** Returns the value of the exponential function with the exponent as    
-     *  the parameter. The function is: 1 + x + x^2/2! + x^3/3! + ... + x^n/n!.
-     *  @param x An integer value x.
-     *  @param x An integer value n.
-     *  @return the result of e^n for .
-     */ 
-    private static double ExpFx(int x, int n) {
-        int[] factorial = new int[n];
-        int[] exp = new int[n];
-        int f = 1, e =1;
-        double result = 1;
-        for (int i = 1; i <= n; i++) {
-            f *= i;
-            e *= e;
-            factorial[i-1] = f;
-            exp[i-1] = e; 
-        }
-        for (int j = n; j > 1; j--) 
-            result += exp[n] / factorial[n];
-        return result;
-    }
-    
-    private static final int[] INPUT = {1, 10, 50, 100}; 
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         
         // instance variables
+        DecimalFormat decimal = new DecimalFormat("#0.00");
         Scanner scan = new Scanner(System.in);
-        int x; // user input value to solve 
+        double x; // user input value to solve 
         String ans; // user input yes or no 'y' or 'n'
         boolean go = true; // flag to determine on and off status of program
+        double result; // variable to store result of function
+        int n = 1; // inputs of n for the exponential function
+        double num, den; // numerator and denominator of exponential function
         
         // gather data
         System.out.println("Tool for calculating the exponential function.");
         do {
-            System.out.println("Please input a value x to calculate e^x.");
-            x = scan.nextInt();
-        
-            // solve the equation for inputs 1, 10, 50 and 100
-            for (int i = 0; i < INPUT.length; i++) {
-                System.out.println("For input of " + INPUT[i] + ":");
-                System.out.println(ExpFx(x, INPUT[i]));
+            System.out.println("Input a positive whole positive number x to "
+                    + "calculate e^x.");
+            x = scan.nextDouble();
+            while (n <= 100 && n >= 1) {
+                result = 1 + x;
+                num = x;
+                den = n;
+                if (n > 1) {
+                    for (int i = 2; i <= n; i++) 
+                        num *= num;
+                    for (int j = n-1; j > 0; j--) 
+                        den *= j;
+                    result += num / den; 
+                }  
+                if (n <= 10 || n == 50 || n == 100) 
+                  System.out.println("The value of e^" + x + " when n is " 
+                          + n + ": " + decimal.format(result));
+                n++; 
             }
-            System.out.println("Would you like to quit? y or n.");
+            
+            System.out.println("Would you like to quit? yes or no.");
             ans = scan.next();
-            if (ans == "yes")
+            if (ans.equalsIgnoreCase("yes"))
                 go = false;
         } while (go);
     

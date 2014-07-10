@@ -1,7 +1,7 @@
 package bottlesofbeer;
 
 /** A class that defines the  song "99 Bottles of Beer".
- * 
+ *  Main method found in BottlesOfBeer.java.
  */
 
 /**

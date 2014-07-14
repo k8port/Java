@@ -100,17 +100,15 @@ public class RainfallData {
     public void display() {
         String one = "Average";
         String two = "Actual";
-        String three = " | ";
+        String three = "Deviation";
         System.out.println(city.toUpperCase());
-        for (int i = 0; i < months.length; i++) 
-            System.out.printf("%-13s%1s",months[i].toString(), three);
-        System.out.print("\n");
-        for (int j = 0; j < months.length; j++) 
-            System.out.printf("%5s %5s%1s", one, two, three);
-        System.out.println("\n");
-        for (int k = 0; k < months.length; k++) 
-            System.out.printf("%5.2f   %5.2f%1s", averages[k], actuals[k], three);
-        System.out.println("\n");
+        for (int i = 0; i < months.length; i++) {
+            System.out.printf("%-13s%n",months[i].toString());
+            System.out.printf("%5s %5s %5s%n", one, two, three);
+            System.out.printf("%5.2f   %5.2f    %5.2f", averages[i], 
+                    actuals[i], deviation[i]);
+            System.out.println("");
+        }
     }
     /**
      * @param args the command line arguments

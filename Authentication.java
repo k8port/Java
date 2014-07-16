@@ -8,7 +8,7 @@
  *  corresponds to their pin. If a match is found the login is successful.
  */
 
-package hanumaninternational;
+package authentication;
 
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -39,9 +39,10 @@ public class Authentication {
     
 
     /** Constructor for Authentication(userId/pin) object. Requests data 
-     *  from the user.
+     *  from the user. Plan on writing exception for case of existing userID.
      */
     public Authentication() {
+        int x, x2;
         if (DEBUG) {
             System.out.println("inside constructor");
         }
@@ -51,9 +52,17 @@ public class Authentication {
             System.out.println("\nEnter a username of 8-12 characters length"
                 + " and comprised \nonly of letters and/or digits.");
             userID = kbd.nextLine(); // read userID from console
-            System.out.println("Lets pick a pin. Enter pin:");   
-            pin = getPinArray(kbd.nextInt());  // convert pin into array          
-        } while (!pinOK() || !uidOK());   // check that userID and pin follow formats   
+        } while (!uidOK()); // check that userID follow format   
+        do {
+            do {
+                System.out.println("Pin must be 5 digits. Enter pin:");   
+                // have user enter pin as one long number 
+                x = kbd.nextInt();
+            } while (Integer.toString(x).length() != 5);
+            System.out.println("Great! Reenter 5-digit pin to verify");
+            x2 = kbd.nextInt();
+        } while (x2 != x);
+        pin = getPinArray(x);
         code = generateCode();  // assign code to encode pin entry
         writeToFile(); // store newly created user data in the database file
     }
@@ -64,18 +73,17 @@ public class Authentication {
      * @return an array of length 5 holding each of the 5 digits
      */
     private int[] getPinArray(int xPin) {
-        if (DEBUG) {
+        if (DEBUG) 
             System.out.println("\ninside getPinArray()");
-        }
-        int[] x = new int[pin.length];
-        for (int j = pin.length; j > 0; j--) {
+        int[] x = new int[PINLENGTH];
+        for (int j = PINLENGTH; j > 0; j--) {
             x[j-1] = xPin % 10;
             xPin /= 10;
         }
         if (DEBUG) {
-            System.out.println("printing return value:");
+            System.out.println("Your pin:");
             for (int i = 0; i < x.length; i++) 
-                System.out.print("index[" + i + "]: " + x[i] + " ");
+                System.out.print(x[i] + " ");
             System.out.println("");
         }
         return x;
@@ -104,22 +112,7 @@ public class Authentication {
         }
         return true;
     }
-    
-    /** Method that returns true is pin matches format. Must be 5 digits
-     *  long.
-     *  @return true if pin matches format
-     */
-    private boolean pinOK() {
-        if (DEBUG) {
-            System.out.println("inside pinOK()");
-        }
-        if (pin.length != 5) {
-            System.out.println("Error: Pin must be 5 digits long.");
-            return false;
-        }
-        return true;
-    }
-    
+       
     /** Method that generates a code for each of the decimal digits. 
      *  The digit at index i is the code number for digit i so the user
      *  will enter the code instead of the actual pin in an attempt to
@@ -132,7 +125,7 @@ public class Authentication {
         }
         int[] codedigs = new int[DECIMAL];
         for (int i = 0; i < DECIMAL; i++) 
-            codedigs[i] = (int) (Math.random() * 3) + 1; 
+            codedigs[i] = (int) (Math.random() * 10); 
         if (DEBUG) {
             System.out.println("printing return value:");
             for (int i = 0; i < codedigs.length; i++) 
@@ -157,7 +150,7 @@ public class Authentication {
             System.exit(0);
         }
         pw.printf("%20s ", userID);
-        for (int i = 0; i < pin.length; i++) 
+        for (int i = 0; i < PINLENGTH; i++) 
             pw.printf("%d", pin[i]);
         pw.println();
         pw.close();
@@ -206,7 +199,7 @@ public class Authentication {
         }
         if (x == null)
             return false;
-        for (int i = 0; i < pin.length; i++) {
+        for (int i = 0; i < PINLENGTH; i++) {
             if (DEBUG) {
                 System.out.println("Test match: temp[" + i + "]: " + temp[i] +
                         " and x[" + i +"]: " + x[i]);
@@ -229,8 +222,8 @@ public class Authentication {
             System.out.println("inside encodePin()");   
         }
         int[] x = getPinArray(xPin);        
-        int[] pincode = new int[pin.length];
-        for (int i = 0; i < pin.length; i++) 
+        int[] pincode = new int[PINLENGTH];
+        for (int i = 0; i < PINLENGTH; i++) 
             pincode[i] = code[x[i]];
         if (DEBUG) {
             System.out.println("printing return value:");
@@ -245,12 +238,14 @@ public class Authentication {
      * Method to display the pin code so that user can login with code.
      */
     private void displayCode() {
-        System.out.println("\nDisplaying code:");
+        String line = "_________________________________________";
+        System.out.println("\nDisplaying code:\n");
         for (int i = 0; i < DECIMAL; i++) 
-            System.out.print(i + " ");
+            System.out.print(i + " | ");
+        System.out.printf("%n%24s%n", line);
         System.out.println("");
         for (int j = 0; j < DECIMAL; j++) 
-            System.out.print(code[j] + " ");
+            System.out.print(code[j] + " | ");
         System.out.println("");
     }
     
